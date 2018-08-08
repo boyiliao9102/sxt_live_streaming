@@ -7,20 +7,25 @@ import subprocess
 
 
 YOUTUBE="rtmp://a.rtmp.youtube.com/live2/"		 
-KEY= "c8pr-pwxw-bd4g-0dh4" 
+KEY= "abdq-sv6g-5a1m-2d72"
+
 #stream_cmd = 'ffmpeg -f h264 -r 25 -i - -itsoffset 5.5 -fflags nobuffer -f alsa -ac 1 -i hw:1,0 -vcodec copy -acodec aac -ac 1 -ar 8000 -ab 32k -map 0:0 -map 1:0 -strict experimental -f flv ' + YOUTUBE + KEY
 #stream_cmd = 'ffmpeg -f h264 -r 25 -i - -itsoffset 5.5 -fflags nobuffer -vcodec copy -map 0:0 -map 1:0 -strict experimental -f flv ' + YOUTUBE + KEY
 
+# this ffmpeg command is working 
+#stream_cmd = 'ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero -f h264 -i - -vcodec copy -acodec aac -ab 32k -t 60 -b 2000 -g 50 -strict experimental -f flv rtmp://a.rtmp.youtube.com/live2/abdq-sv6g-5a1m-2d72'				 
+stream_cmd = 'ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero -f h264 -i - -vcodec copy -acodec aac -ab 32k -t 60 -b 2000 -g 50 -strict experimental -f flv ' + YOUTUBE + KEY				 
 
-stream_cmd = 'ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero -f h264 -i - -vcodec copy -acodec aac -ab 128k -g 50 -strict experimental -f flv rtmp://a.rtmp.youtube.com/live2/suru-jjfs-4uug-4wk1'				 
-#stream_cmd = 'ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero -f h264 -i "/home/pi/py_example/video.h264" -vcodec copy -acodec aac -ab 128k -g 50 -strict experimental -f flv rtmp://a.rtmp.youtube.com/live2/suru-jjfs-4uug-4wk1'				 
+# using raspivid for testing
+#stream_cmd = 'raspivid -o - -t 0 -w 640 -h 480 -fps 10 -b 500000 | ffmpeg -re -ar 44100 -ac 2 -acodec pcm_s16le -f s16le -ac 2 -i /dev/zero -f h264 -i - -vcodec copy -acodec aac -ab 32k -t 300 -b 2000 -g 50 -strict experimental -f flv rtmp://a.rtmp.youtube.com/live2/abdq-sv6g-5a1m-2d72'				 
+
 
 stream_pipe = subprocess.Popen(stream_cmd, shell=True, stdin=subprocess.PIPE) 
 camera = picamera.PiCamera() 
-camera.resolution = (640, 480)
-#camera.resolution = (1280, 720)  
-camera.rotation   = 180	 
-camera.crop       = (0.0, 0.0, 1.0, 1.0) 
+#camera.resolution = (1280, 720)
+camera.resolution = (320, 240)
+camera.rotation   = 0	 
+#camera.crop       = (0.0, 0.0, 1.0, 1.0) 
 camera.framerate  = 20 
 rgb = bytearray(camera.resolution[0] * camera.resolution[1] * 3)
 
@@ -49,11 +54,19 @@ rgb = bytearray(camera.resolution[0] * camera.resolution[1] * 3)
 #camera.start_recording(stream_pipe.stdin, format='h264', bitrate = 500000)
 
 
-camera.wait_recording(1)
 print('...start recoding')
-#camera.start_recording(stream_pipe.stdin, format='h264', bitrate = 2000000)
+
+camera.start_preview()
 camera.start_recording(stream_pipe.stdin, format='h264', bitrate = 500000) 
 #camera.start_recording('my_video.h264')
-camera.wait_recording(20)
+
+#sleep(60)
+camera.wait_recording(60)
+
+
 camera.stop_recording()
-print('...stop recoding') 
+camera.stop_preview()
+os.system('killall ffmpeg')
+print('...stop recoding and ffmpeg pump to Youtube')
+
+
