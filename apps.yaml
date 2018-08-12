@@ -1,0 +1,30 @@
+mqttbroker:
+    host: 172.16.178.113
+    port: 1883
+    timeout: 0
+
+youtube:
+    streamurl:
+        - rtmp://a.rtmp.youtube.com/live2/
+    streamkey: tc0h-cgew-sezr-ftyc
+    codec: h264
+    resolution:
+        width: 640
+        high: 480
+    framerate: 15
+    bitrate: 500000
+    rotation: 0
+    period: 120
+
+facebook:
+    streamurl:
+        - rtmp://live-api-s.facebook.com:80/rtmp/
+    streamkey: 123-456-78
+    codec: h264
+    resolution:
+        width: 640
+        high: 480
+    framerate: 15
+    bitrate: 500000
+    rotation: 0
+    period: 120
