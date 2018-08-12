@@ -20,5 +20,5 @@ Then use any MQTT client to public to a topic:
 
     livestream/youtube/start
     livestream/youtube/stop
-    livestream/facebook/start
-    livestream/facebook/stop
+    livestream/facebook/start(not support)
+    livestream/facebook/stop(not support)
