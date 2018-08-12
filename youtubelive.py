@@ -2,9 +2,8 @@
 import os
 import time
 import io
-import picamera
+import picamera  # pip3 install picamera
 import subprocess
-import decimal
 from config import Config
 from topic  import Topic
 

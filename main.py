@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import sys
 import getopt
-import paho.mqtt.client as mqtt   # pip install paho-mqtt
+import paho.mqtt.client as mqtt   # pip3 install paho-mqtt
 from config import Config
 from topic  import Topic
 from youtubelive import YoutubeLive
@@ -34,4 +34,3 @@ client.on_message = on_message
 
 client.connect(conf.Host, conf.Port, conf.Timeout)
 client.loop_forever()
-
