@@ -1,6 +1,6 @@
 
 
-Sanxiantai Live Stream Task
+Sanxiantai Live Streaming
 ===========================
 
 Using MQTT to trigger live streaming on Youtube and Facebook.
