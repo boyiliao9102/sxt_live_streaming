@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import os
-import yaml
+import yaml # pip3 install pyyaml
 import sys
 
 CONFIG_FILE = 'apps.yaml'

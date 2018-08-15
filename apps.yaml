@@ -6,7 +6,7 @@ mqttbroker:
 youtube:
     streamurl:
         - rtmp://a.rtmp.youtube.com/live2/
-    streamkey: tc0h-cgew-sezr-ftyc
+    streamkey: v8px-kyrz-rrtt-f00w
     codec: h264
     resolution:
         width: 640
