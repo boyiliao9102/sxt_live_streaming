@@ -36,13 +36,14 @@ class YoutubeLive():
         print('>> Start Youtube Sreaming')
         self.camera.start_recording(self.stream_pipe.stdin, format=self.conf.YoutubeCodec, bitrate=self.conf.YoutubeBitrate)
         self.camera.wait_recording(self.conf.YoutubePeriod)
-        self.stop_Youtube_Stream()
+        #self.stop_Youtube_Stream()
 
     def process(self, triggered_topic):
         if (self.topic.YoutubeStart == triggered_topic):
             self.start_Youtube_Stream()
+            #print("Do youtube thinngs")
         elif (self.topic.YoutubeStop == triggered_topic):
-            #self.stop_Youtube_Stream()
-            print("Do nothing!")
+            self.stop_Youtube_Stream()
+            #print("Do nothing!")
         else:
             print("The topic doesn't support!")

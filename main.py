@@ -7,8 +7,12 @@ from topic  import Topic
 from youtubelive import YoutubeLive
 #from facebooklive import FacebookLive
 
-conf  = Config()
-topic = Topic()
+# Initialization
+conf    = Config()
+topic   = Topic()
+youtube = YoutubeLive()
+#facebook = FacebookLive()
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to {0} with result code {1}".format(conf.Host, rc))
@@ -19,12 +23,13 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print("Message received on topic {0}: {1}".format(msg.topic, msg.payload))
     if (msg.topic.startswith(topic.YoutubeTopics) == True):
-        livestream = YoutubeLive()
+        print("livestream = YoutubeLive()")
+        youtube.process(msg.topic)
     elif (msg.topic.startswith(topic.FacebookTopics) == True):
+        #facebook.process(msg.topic)
         print("livestream = FacebookLive()")
     else:
         print("The topic doesn't support")
-    livestream.process(msg.topic)
 
 
 client = mqtt.Client()
