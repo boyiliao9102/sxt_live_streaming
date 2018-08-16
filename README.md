@@ -9,11 +9,12 @@ All the processes tests on raspberry pi.
 
 To Run the following command for starting this service
 
-    python main.py
+    python3 main.py
 
 Then use any MQTT client to public to a topic:
 
     mosquitto_pub -t 'livestream/youtube/start' -m test
+    mosquitto_pub -t 'livestream/youtube/stop' -m test
 
 ## Topics
 

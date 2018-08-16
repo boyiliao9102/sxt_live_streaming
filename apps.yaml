@@ -1,12 +1,12 @@
 mqttbroker:
-    host: 172.16.178.113
+    host: 127.0.0.1
     port: 1883
     timeout: 0
 
 youtube:
     streamurl:
         - rtmp://a.rtmp.youtube.com/live2/
-    streamkey: v8px-kyrz-rrtt-f00w
+    streamkey: abdq-sv6g-5a1m-2d72
     codec: h264
     resolution:
         width: 640
@@ -14,7 +14,7 @@ youtube:
     framerate: 15
     bitrate: 500000
     rotation: 0
-    period: 120
+    period: 60
 
 facebook:
     streamurl:

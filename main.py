@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt   # pip3 install paho-mqtt
 from config import Config
 from topic  import Topic
 from youtubelive import YoutubeLive
+import threading as td
 #from facebooklive import FacebookLive
 
 # Initialization
@@ -24,7 +25,13 @@ def on_message(client, userdata, msg):
     print("Message received on topic {0}: {1}".format(msg.topic, msg.payload))
     if (msg.topic.startswith(topic.YoutubeTopics) == True):
         print("livestream = YoutubeLive()")
-        youtube.process(msg.topic)
+        #youtube.process(msg.topic)
+        t1 = td.Thread(target=youtube.process, args=(msg.topic,))
+        print ('Thread start .') 		
+        t1.start()
+        print ('Thread start ..')
+        t1.join()  
+        print ('Thread after join ...')
     elif (msg.topic.startswith(topic.FacebookTopics) == True):
         #facebook.process(msg.topic)
         print("livestream = FacebookLive()")

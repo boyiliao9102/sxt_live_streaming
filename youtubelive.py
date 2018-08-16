@@ -18,13 +18,21 @@ class YoutubeLive():
     def stop_Youtube_Stream(self):
         print('>> Stop Youtube Sreaming')
         self.camera.stop_recording()
-        os.system('killall ffmpeg')
+        #os.system('killall ffmpeg')
+        #subprocess.call('killall ffmpeg', shell=True)
+        try:
+            output = subprocess.check_output('killall ffmpeg', shell=True)
+        except subprocess.CalledProcessError:
+            print('kill ffmpeg Exception handled')
+
         print('...stop recoding and stop ffmpeg pump to Youtube.')
+
 
     def start_Youtube_Stream(self):
         STREAM_URL = self.conf.YoutubeStreamURL
         STREAM_KEY = self.conf.YoutubeStreamKey
         STREAM_CMD = FFMPEG_CMD + STREAM_URL + STREAM_KEY
+
         self.stream_pipe = subprocess.Popen(STREAM_CMD, shell=True, stdin=subprocess.PIPE)
         print('>> init Youtube')
         print(self.conf.YoutubeWidth)
@@ -35,15 +43,14 @@ class YoutubeLive():
         rgb = bytearray(self.camera.resolution[0] * self.camera.resolution[1] * 3)
         print('>> Start Youtube Sreaming')
         self.camera.start_recording(self.stream_pipe.stdin, format=self.conf.YoutubeCodec, bitrate=self.conf.YoutubeBitrate)
-        self.camera.wait_recording(self.conf.YoutubePeriod)
+        #self.camera.wait_recording(self.conf.YoutubePeriod)
         #self.stop_Youtube_Stream()
 
     def process(self, triggered_topic):
         if (self.topic.YoutubeStart == triggered_topic):
             self.start_Youtube_Stream()
-            #print("Do youtube thinngs")
         elif (self.topic.YoutubeStop == triggered_topic):
             self.stop_Youtube_Stream()
-            #print("Do nothing!")
+            print(">> process stop YouTube!")
         else:
             print("The topic doesn't support!")
